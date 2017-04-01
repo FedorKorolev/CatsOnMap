@@ -6,7 +6,7 @@
 //  Copyright © 2017 Nikolay Shubenkov. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class FlickrAPIService {
     
@@ -29,6 +29,7 @@ class FlickrAPIService {
         
         let url = self.buildURL(tag: tag)
         
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
         //данные получаются не мгновенно
         //и резальтат будет вызван уже после работы метода search 
@@ -36,6 +37,8 @@ class FlickrAPIService {
         //поэтому мы обязаны для замыканий success и failure
         //добавить @escaping  
         let task:URLSessionTask = session.dataTask(with: url) { (data, response, error) in
+            
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
             
             print("\n=============data:\(String(describing:data)) \nresponse:\(String(describing:response)) \nerror:\(String(describing:error))")
             guard error == nil else {

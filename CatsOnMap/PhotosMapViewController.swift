@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import MBProgressHUD
 
 class PhotosMapViewController: UIViewController {
 
@@ -55,6 +56,9 @@ class PhotosMapViewController: UIViewController {
     
     func searchFor(text:String){
         
+        MBProgressHUD.showAdded(to: mapView,
+                                          animated: true)
+        
         apiService.search(tag: text,
                           //этот блок кода будет вызван позже
             success: { cats in
@@ -66,12 +70,27 @@ class PhotosMapViewController: UIViewController {
                 //нам нужно переключиться в очередь для раьоты
                 //с ним. (mainQueue)
                 DispatchQueue.main.async {
+                    MBProgressHUD.hide(for: self.mapView,
+                                       animated: true)
                     self.showPinsOnMap(pins: cats)
                 }
                 
                 //и этот тоже будет чуть позже вызван
         }) { error in
             
+            DispatchQueue.main.async {
+                MBProgressHUD.hide(for: self.mapView,
+                                   animated: true)
+            }
+            
+            switch error {
+            case FlickrAPIService.APIError.noPhotosFound:
+                
+                break
+
+            default:
+                break
+            }
             print("\(error)")
         }
     }
@@ -79,7 +98,8 @@ class PhotosMapViewController: UIViewController {
     func showPinsOnMap(pins:[PhotoInfo])
     {
         mapView.removeAnnotations(mapView.annotations)
-        mapView.addAnnotations(pins)
+        mapView.showAnnotations(pins,
+                                animated: true)
     }
     
     func showGrandCentralDispatchInAction(){
