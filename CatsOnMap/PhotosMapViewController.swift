@@ -43,6 +43,13 @@ class PhotosMapViewController: UIViewController {
 //        showGrandCentralDispatchInAction()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? PhotoDetailedViewController,
+            let photo = sender as? PhotoInfo {
+            vc.photo = photo
+        }
+    }
+    
     func showPinsOnMap(pins:[PhotoInfo])
     {
         mapView.removeAnnotations(mapView.annotations)
@@ -96,6 +103,7 @@ extension PhotosMapViewController : MKMapViewDelegate {
         if photoView == nil {
             photoView = MKPinAnnotationView(annotation: photo,
                                             reuseIdentifier: viewId)
+            photoView?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         }
         photoView?.annotation = photo
         
@@ -112,10 +120,24 @@ extension PhotosMapViewController : MKMapViewDelegate {
         
         
         photoView?.leftCalloutAccessoryView = imageView
-        
         photoView?.canShowCallout = true
         
         return photoView
+    }
+    
+    //когда пользователь нажал на любой элемент типа
+    //UIButton, UISwitch все, что является наследником от UIControl
+    //сработает этот метод
+    //т.к. у нас на метке только один объект такого типа
+    //мы знаем, что можем выполнить лишь одно действие
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        
+        guard let photo = view.annotation as? PhotoInfo else {
+            return
+        }
+        
+        performSegue(withIdentifier: "Show Photo Detailes",
+                     sender: photo)
     }
     
 }
