@@ -24,11 +24,18 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="fWB-dp-aAo">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </mapView>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Qge-Bs-b3T">
+                                <rect key="frame" x="0.0" y="64" width="375" height="44"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="Qge-Bs-b3T" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="27Q-GJ-fEk"/>
                             <constraint firstAttribute="trailing" secondItem="fWB-dp-aAo" secondAttribute="trailing" id="6br-Qj-dfh"/>
+                            <constraint firstAttribute="trailing" secondItem="Qge-Bs-b3T" secondAttribute="trailing" id="6j1-bo-b2b"/>
                             <constraint firstItem="fWB-dp-aAo" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="AgN-NP-VNa"/>
+                            <constraint firstItem="Qge-Bs-b3T" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="Izs-hG-Cmr"/>
                             <constraint firstItem="fWB-dp-aAo" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="f6d-Dm-PR7"/>
                             <constraint firstItem="fWB-dp-aAo" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="m3T-GR-Mf6"/>
                         </constraints>
@@ -36,6 +43,7 @@
                     <navigationItem key="navigationItem" id="2bz-Xd-QeB"/>
                     <connections>
                         <outlet property="mapView" destination="fWB-dp-aAo" id="uGx-h5-3yA"/>
+                        <outlet property="searchBar" destination="Qge-Bs-b3T" id="yOG-e5-PJI"/>
                         <segue destination="Oad-MB-Nux" kind="show" identifier="Show Photo Detailes" id="syt-wq-mwM"/>
                     </connections>
                 </viewController>

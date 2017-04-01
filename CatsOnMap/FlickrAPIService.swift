@@ -116,9 +116,7 @@ class FlickrAPIService {
     private func buildURL(tag:String)->URL {
         var urlString = Constants.buildWith(methodName: "flickr.photos.search")
         print("создали ссылку с методом\n\(urlString)")
-    //tags=cat&
-        //has_geo=1&
-        //extras=geo%2Curl_l%2Curl_s&
+        
         let params = ["has_geo":"1",
                       "tags":tag,
                       "extras":"geo,url_l,url_s"]

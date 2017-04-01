@@ -11,6 +11,7 @@ import MapKit
 
 class PhotosMapViewController: UIViewController {
 
+    @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var mapView: MKMapView!
     
     private var apiService = FlickrAPIService()
@@ -18,28 +19,10 @@ class PhotosMapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        searchBar.delegate = self
+        searchBar.showsCancelButton = true
+        
         mapView.delegate = self
-        
-        apiService.search(tag: "киса",
-                          //этот блок кода будет вызван позже
-                          success: { cats in
-                            
-        print("\nА вот и фотографии:\(cats)")
-                            //т.к. этот код вызван не в осной очереди
-                            //mainQueue 
-                            //а мы сейчас начнем работать с интерфейсом
-                            //нам нужно переключиться в очередь для раьоты
-                            //с ним. (mainQueue)
-                            DispatchQueue.main.async {
-                                self.showPinsOnMap(pins: cats)
-                            }
-
-        //и этот тоже будет чуть позже вызван
-        }) { error in
-            
-            print("\(error)")
-        }
-        
 //        showGrandCentralDispatchInAction()
     }
     
@@ -47,6 +30,29 @@ class PhotosMapViewController: UIViewController {
         if let vc = segue.destination as? PhotoDetailedViewController,
             let photo = sender as? PhotoInfo {
             vc.photo = photo
+        }
+    }
+    
+    func searchFor(text:String){
+        
+        apiService.search(tag: text,
+                          //этот блок кода будет вызван позже
+            success: { cats in
+                
+                print("\nА вот и фотографии:\(cats)")
+                //т.к. этот код вызван не в осной очереди
+                //mainQueue
+                //а мы сейчас начнем работать с интерфейсом
+                //нам нужно переключиться в очередь для раьоты
+                //с ним. (mainQueue)
+                DispatchQueue.main.async {
+                    self.showPinsOnMap(pins: cats)
+                }
+                
+                //и этот тоже будет чуть позже вызван
+        }) { error in
+            
+            print("\(error)")
         }
     }
     
@@ -139,5 +145,6 @@ extension PhotosMapViewController : MKMapViewDelegate {
         performSegue(withIdentifier: "Show Photo Detailes",
                      sender: photo)
     }
-    
 }
+
+

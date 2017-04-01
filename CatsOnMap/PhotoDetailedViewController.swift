@@ -15,6 +15,7 @@ class PhotoDetailedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = photo?.title
         imageView.loadImage(link: photo?.fullPhotoLink ?? "")
         imageView.contentMode = .scaleAspectFit
     }
