@@ -11,7 +11,7 @@ import MapKit
 
 class PhotosMapViewController: UIViewController {
 
-    @IBOutlet var searchBar: UISearchBar!
+    var searchBar: UISearchBar!
     @IBOutlet var mapView: MKMapView!
     
     private var apiService = FlickrAPIService()
@@ -19,11 +19,31 @@ class PhotosMapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        searchBar.delegate = self
-        searchBar.showsCancelButton = true
+        setupSearch()
         
         mapView.delegate = self
 //        showGrandCentralDispatchInAction()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //каждый раз, когда наш контроллер ьудет появляться на экране
+        //мы позволим скрывать шапку при касании карты
+        navigationController!.hidesBarsOnSwipe = true
+        navigationController?.hidesBarsOnTap = true
+    }
+    
+    func setupSearch(){
+        searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: 200, height: 30))
+            //заставим обновить свой размер
+        searchBar.sizeToFit()
+        
+        //вставим строку поиска в шапку
+        navigationItem.titleView = searchBar
+        searchBar.delegate = self
+        
+        searchBar.delegate = self
+        searchBar.showsCancelButton = true
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
