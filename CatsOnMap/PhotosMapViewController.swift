@@ -12,10 +12,18 @@ import MapKit
 class PhotosMapViewController: UIViewController {
 
     @IBOutlet var mapView: MKMapView!
+    
+    private var apiService = FlickrAPIService()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        apiService.search(tag: "киса",
+                          success: { cats in
+                            
+        }) { error in
+            print("\(error)")
+        }
     }
 
     override func didReceiveMemoryWarning() {
