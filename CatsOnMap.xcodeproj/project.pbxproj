@@ -14,6 +14,7 @@
 		4F47155C1E8F8C4000D80B4D /* PhotosMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F47155B1E8F8C4000D80B4D /* PhotosMapViewController.swift */; };
 		4F47155E1E8F929C00D80B4D /* FlickrAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F47155D1E8F929C00D80B4D /* FlickrAPIService.swift */; };
 		4F4715601E8FA77D00D80B4D /* PhotoInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F47155F1E8FA77D00D80B4D /* PhotoInfo.swift */; };
+		4F4715621E8FCC7E00D80B4D /* UIImageView+Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4715611E8FCC7E00D80B4D /* UIImageView+Download.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		4F47155B1E8F8C4000D80B4D /* PhotosMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosMapViewController.swift; sourceTree = "<group>"; };
 		4F47155D1E8F929C00D80B4D /* FlickrAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrAPIService.swift; sourceTree = "<group>"; };
 		4F47155F1E8FA77D00D80B4D /* PhotoInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoInfo.swift; sourceTree = "<group>"; };
+		4F4715611E8FCC7E00D80B4D /* UIImageView+Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Download.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				4F47154D1E8F8ACB00D80B4D /* Main.storyboard */,
 				4F47155D1E8F929C00D80B4D /* FlickrAPIService.swift */,
 				4F47155B1E8F8C4000D80B4D /* PhotosMapViewController.swift */,
+				4F4715611E8FCC7E00D80B4D /* UIImageView+Download.swift */,
 				4F4715501E8F8ACB00D80B4D /* Assets.xcassets */,
 				4F4715521E8F8ACB00D80B4D /* LaunchScreen.storyboard */,
 				4F4715551E8F8ACB00D80B4D /* Info.plist */,
@@ -144,6 +147,7 @@
 			files = (
 				4F4715601E8FA77D00D80B4D /* PhotoInfo.swift in Sources */,
 				4F47155C1E8F8C4000D80B4D /* PhotosMapViewController.swift in Sources */,
+				4F4715621E8FCC7E00D80B4D /* UIImageView+Download.swift in Sources */,
 				4F47154A1E8F8ACB00D80B4D /* AppDelegate.swift in Sources */,
 				4F47155E1E8F929C00D80B4D /* FlickrAPIService.swift in Sources */,
 			);

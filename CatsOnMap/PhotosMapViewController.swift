@@ -18,6 +18,8 @@ class PhotosMapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        mapView.delegate = self
+        
         apiService.search(tag: "киса",
                           //этот блок кода будет вызван позже
                           success: { cats in
@@ -69,6 +71,51 @@ class PhotosMapViewController: UIViewController {
         
         
     }
+}
+
+
+extension PhotosMapViewController : MKMapViewDelegate {
     
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        //если это не метка, созданная нами
+        //вернем nil, пусть mapView сам разбирается с тем,
+        //как эту метку показать
+        guard let photo = annotation as? PhotoInfo else {
+            return nil
+        }
+        
+        //это идентификатор для всех вью, которые будут показывать метку
+        let viewId = "photoPin"
+        
+        //запросим свободный вью для отобржаения метки с таким-то идентификатором
+        var photoView = mapView.dequeueReusableAnnotationView(withIdentifier: viewId)
+        
+        //если нет свободных меток 
+        //то создадим его сами
+        if photoView == nil {
+            photoView = MKPinAnnotationView(annotation: photo,
+                                            reuseIdentifier: viewId)
+        }
+        photoView?.annotation = photo
+        
+        //тут мы будем хранить картинку
+        let imageView = UIImageView(frame: CGRect(x: 0,
+                                                  y: 0,
+                                                  width: 50,
+                                                  height: 50))
+        
+        
+        imageView.contentMode = .scaleAspectFill
+        
+        imageView.loadImage(link: photo.iconLink)
+        
+        
+        photoView?.leftCalloutAccessoryView = imageView
+        
+        photoView?.canShowCallout = true
+        
+        return photoView
+    }
     
 }
