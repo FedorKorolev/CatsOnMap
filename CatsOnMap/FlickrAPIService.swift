@@ -12,6 +12,7 @@ class FlickrAPIService {
     
     enum APIError:Error {
         case wrongServerResponse
+        case noPhotosFound
     }
     
     //URLSession - класс, который позволяет обращаться к данным в сети
@@ -57,6 +58,13 @@ class FlickrAPIService {
             
             let photos = self.buildPhotos(from: dictionary)
             
+            print("\nА вот и фотографии:\(photos)")
+            
+            guard photos.count > 0 else {
+                failure(APIError.noPhotosFound)
+                return
+            }
+            success(photos)
         }
         
         //запустим выполенение созданной задачи
@@ -66,9 +74,28 @@ class FlickrAPIService {
         print("вызов метода search завершен")
     }
     
-    private func buildPhotos(from dictionary:[String:Any])->[Any]
+    private func buildPhotos(from dictionary:[String:Any])->[PhotoInfo]
     {
-        return []
+        //оппробуем прорваться через тернии ключей и значений
+        //до массива с описанием фотографий
+        guard let photoS = dictionary["photos"] as? [String: Any] else {
+            return []
+        }
+        guard let photoJSONs = photoS["photo"] as? [ [String:Any] ] else {
+            return []
+        }
+        
+        var result = [PhotoInfo]()
+        
+        //пробежимся по словарям и попробуем из них получить 
+        //фотографии
+        for photoJSON in photoJSONs {
+            if let info = PhotoInfo(json: photoJSON){
+                result.append(info)
+            }
+        }
+        
+        return result
     }
     
     private struct Constants {
