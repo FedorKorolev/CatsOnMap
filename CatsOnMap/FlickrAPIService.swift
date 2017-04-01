@@ -10,6 +10,10 @@ import Foundation
 
 class FlickrAPIService {
     
+    enum APIError:Error {
+        case wrongServerResponse
+    }
+    
     //URLSession - класс, который позволяет обращаться к данным в сети
     //загружать их и отправлять из приложения на сервер
     private let session = URLSession(configuration: URLSessionConfiguration.default)
@@ -24,8 +28,47 @@ class FlickrAPIService {
         
         let url = self.buildURL(tag: tag)
         
+        
+        let task = session.dataTask(with: url) { (data, response, error) in
+            
+            print("data:\(data) \nresponse:\(response) \nerror:\(error)")
+            guard error == nil else {
+                failure(error!)
+                return
+            }
+            
+            //убедимся, что ответ от сервера успешный
+            guard let serverResponse = response as? HTTPURLResponse,
+                //код ответа успешный
+                serverResponse.statusCode == 200,
+                //убедимся, что какие-то данные нам пришли
+                //и мы их сможем преобразовать
+                let jsonData = data else {
+                    failure( APIError.wrongServerResponse )
+                    return
+            }
+            
+            guard let jsonObject = try? JSONSerialization.jsonObject(with: jsonData,
+                                                                     options: []),
+                let dictionary = jsonObject as? [String:Any] else {
+                    failure(APIError.wrongServerResponse)
+                    return
+            }
+            
+            let photos = self.buildPhotos(from: dictionary)
+            
+        }
+        
+        //запустим выполенение созданной задачи
+        task.resume()
+        
          //https://api.flickr.com/services/rest/?
         print("вызов метода search завершен")
+    }
+    
+    private func buildPhotos(from dictionary:[String:Any])->[Any]
+    {
+        return []
     }
     
     private struct Constants {
