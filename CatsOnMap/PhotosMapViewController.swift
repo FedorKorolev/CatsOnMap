@@ -165,6 +165,14 @@ extension PhotosMapViewController : MKMapViewDelegate {
         performSegue(withIdentifier: "Show Photo Detailes",
                      sender: photo)
     }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        if let imageView = (view as? MKPinAnnotationView)?.leftCalloutAccessoryView as? UIImageView,
+            let photo = view.annotation as? PhotoInfo{
+            imageView.loadImage(link: photo.iconLink,
+                                highPriority:true)
+        }
+    }
 }
 
 

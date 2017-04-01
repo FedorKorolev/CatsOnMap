@@ -10,7 +10,7 @@ import UIKit
 
 extension UIImageView {
     
-    func loadImage(link:String){
+    func loadImage(link:String, highPriority:Bool = false){
         
         self.image = nil
         
@@ -20,7 +20,7 @@ extension UIImageView {
         }
         
         //попытаемся скачать данные по ссылке
-        URLSession.shared.dataTask(with: url) { data, _, _ in
+        let task = URLSession.shared.dataTask(with: url) { data, _, _ in
             guard let imageData = data,
                 let image = UIImage(data: imageData) else {
                     return
@@ -30,7 +30,9 @@ extension UIImageView {
             DispatchQueue.main.async {
                 self.image = image
             }
-        }.resume()//  <- запустим созданную задачу сразу
+        }
+        task.priority = highPriority ? 1 : 0.5
+        task.resume()
     }
     
 }
