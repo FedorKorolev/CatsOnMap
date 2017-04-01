@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import MapKit
 
-struct PhotoInfo {
+class PhotoInfo:NSObject, MKAnnotation {
 //    "title": "African Lion",
     let title:String?
     
@@ -17,6 +18,11 @@ struct PhotoInfo {
     
     var iconLink:String
     var fullPhotoLink:String
+    
+    var coordinate: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: latitude,
+                                      longitude: longitude)
+    }
     
     init?(json:[String:Any])
     {

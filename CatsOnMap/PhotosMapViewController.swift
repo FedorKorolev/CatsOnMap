@@ -23,28 +23,52 @@ class PhotosMapViewController: UIViewController {
                           success: { cats in
                             
         print("\nА вот и фотографии:\(cats)")
-                            
-                            //и этот тоже будет чуть позже вызван
+                            //т.к. этот код вызван не в осной очереди
+                            //mainQueue 
+                            //а мы сейчас начнем работать с интерфейсом
+                            //нам нужно переключиться в очередь для раьоты
+                            //с ним. (mainQueue)
+                            DispatchQueue.main.async {
+                                self.showPinsOnMap(pins: cats)
+                            }
+
+        //и этот тоже будет чуть позже вызван
         }) { error in
             
             print("\(error)")
         }
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
+//        showGrandCentralDispatchInAction()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func showPinsOnMap(pins:[PhotoInfo])
+    {
+        mapView.removeAnnotations(mapView.annotations)
+        mapView.addAnnotations(pins)
     }
-    */
-
+    
+    func showGrandCentralDispatchInAction(){
+        
+        //создадим очередь - это объект,  внутри которого можно 
+        //выполнять некоторую задачу
+        let queue = DispatchQueue(label: "ru.specialist.swiftapps2")
+        
+        //можно выполнять код асинхронно
+        queue.sync {
+            for i in 0..<10 {
+                print("🤡_\(i)")
+            }
+        }
+        
+        //эта задача выполеяеся асинхронно
+//        queue.async {
+            for i in 100..<110 {
+                print("_👻\(i)")
+            }
+//        }
+        
+        
+    }
+    
+    
 }
