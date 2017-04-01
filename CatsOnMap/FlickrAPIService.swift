@@ -37,7 +37,7 @@ class FlickrAPIService {
         //добавить @escaping  
         let task:URLSessionTask = session.dataTask(with: url) { (data, response, error) in
             
-            print("\n=============data:\(data) \nresponse:\(response) \nerror:\(error)")
+            print("\n=============data:\(String(describing:data)) \nresponse:\(String(describing:response)) \nerror:\(String(describing:error))")
             guard error == nil else {
                 failure(error!)
                 return
@@ -119,7 +119,7 @@ class FlickrAPIService {
     //tags=cat&
         //has_geo=1&
         //extras=geo%2Curl_l%2Curl_s&
-        var params = ["has_geo":"1",
+        let params = ["has_geo":"1",
                       "tags":tag,
                       "extras":"geo,url_l,url_s"]
         for (key,value) in params {
