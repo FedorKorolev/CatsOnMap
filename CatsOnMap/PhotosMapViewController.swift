@@ -19,9 +19,14 @@ class PhotosMapViewController: UIViewController {
         super.viewDidLoad()
         
         apiService.search(tag: "киса",
+                          //этот блок кода будет вызван позже
                           success: { cats in
                             
+        print("\nА вот и фотографии:\(cats)")
+                            
+                            //и этот тоже будет чуть позже вызван
         }) { error in
+            
             print("\(error)")
         }
     }

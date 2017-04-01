@@ -22,17 +22,22 @@ class FlickrAPIService {
     func search(tag:String,
                 //escaping означает, что это замыкание будет выполнено не в течение работы метода search
                 //а когда-то потом
-                success:@escaping( ([Any])->Void ),
-                failure:@escaping( (Error)->Void ))
+                success:@escaping( ([PhotoInfo])->Void ),
+                failure:@escaping ( (Error)->Void ))
     {
         print("а сейчас мы обратимся к серверу")
         
         let url = self.buildURL(tag: tag)
         
         
-        let task = session.dataTask(with: url) { (data, response, error) in
+        //данные получаются не мгновенно
+        //и резальтат будет вызван уже после работы метода search 
+        //и после resumе
+        //поэтому мы обязаны для замыканий success и failure
+        //добавить @escaping  
+        let task:URLSessionTask = session.dataTask(with: url) { (data, response, error) in
             
-            print("data:\(data) \nresponse:\(response) \nerror:\(error)")
+            print("\n=============data:\(data) \nresponse:\(response) \nerror:\(error)")
             guard error == nil else {
                 failure(error!)
                 return
@@ -58,7 +63,6 @@ class FlickrAPIService {
             
             let photos = self.buildPhotos(from: dictionary)
             
-            print("\nА вот и фотографии:\(photos)")
             
             guard photos.count > 0 else {
                 failure(APIError.noPhotosFound)
